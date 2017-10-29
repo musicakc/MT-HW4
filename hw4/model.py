@@ -18,6 +18,7 @@ class RNNLM(nn.Module):
   def softmax(self, x):
     calc = torch.exp(x)
     result = calc / torch.sum(calc)
+    return result
 
   def forward(self, input_batch):
     sequence_length = input_batch.size()[0]
@@ -36,7 +37,7 @@ class RNNLM(nn.Module):
         hidden_c = torch.tanh(input_temp.mm(self.Wxh) + last_hidden.mm(self.Whh))
       last_hidden = hidden_c
       op = hidden_c.mm(self.Wyh)
-      #TODO: softmax function on op
+      #softmax function on op
       new_op = softmax(op)
       output_p.append(new_op)
     return output_p
