@@ -15,6 +15,10 @@ class RNNLM(nn.Module):
     self.Whh = nn.Parameter(torch.Tensor(16,16), requires_grad = True)
     self.Wyh = nn.Parameter(torch.Tensor(16, vocab_size), requires_grad =True)
 
+  def softmax(self, x):
+    calc = torch.exp(x)
+    result = calc / torch.sum(calc)
+
   def forward(self, input_batch):
     sequence_length = input_batch.size()[0]
     batch_size = input_batch.size()[1]
@@ -33,7 +37,8 @@ class RNNLM(nn.Module):
       last_hidden = hidden_c
       op = hidden_c.mm(self.Wyh)
       #TODO: softmax function on op
-      output_p.append(op)
+      new_op = softmax(op)
+      output_p.append(new_op)
     return output_p
 
 
