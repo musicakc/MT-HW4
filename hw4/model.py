@@ -25,6 +25,7 @@ class RNNLM(nn.Module):
     batch_size = input_batch.size()[1]
     #check
     input_p = self.embeddings[input_batch.data, :].data
+    print(input_p)
     output_p = Variable(torch.zeros(sequence_length, batch_size, self.vocab_size), requires_grad=False)
     hidden_layer = nn.Parameter(torch.randn(batch_size, self.hidden_dim), requires_grad=True)
 
@@ -39,7 +40,7 @@ class RNNLM(nn.Module):
       op = hidden_c.mm(self.Wyh)
       #softmax function on op
       new_op = softmax(op)
-      output_p.append(new_op)
+      output_p[i, :, :] = new_op
     return output_p
 
 
