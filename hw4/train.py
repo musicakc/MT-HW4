@@ -56,7 +56,7 @@ def main(options):
   if options.gpuid:
     cuda.set_device(options.gpuid[0])
 
-  train, dev, test, vocab = torch.load(open(options.data_file, 'rb'), pickle_module=dill)
+  train, dev, test, vocab = torch.load(open("data/hw4_data.bin", 'rb'), pickle_module=dill)
   train_in = get_lm_input(train)
   train_out = get_lm_output(train)
   dev_in = get_lm_input(dev)
